@@ -1,0 +1,22 @@
+{
+  "name": "geoconv",
+  "version": "1.0.0",
+  "description": "Command line geo format converter.",
+  "main": "index.js",
+  "author": "Jeff Marion",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=7.6"
+  },
+  "bin": {
+    "geoconv": "./index.js"
+  },
+  "dependencies": {
+    "commander": "^2.15.1",
+    "get-stdin": "^6.0.0",
+    "terraformer": "^1.0.8",
+    "terraformer-arcgis-parser": "^1.0.5",
+    "terraformer-wkt-parser": "^1.1.2"
+  }
+}
