@@ -20,17 +20,27 @@ program
   .parse(process.argv);
 
 (async () => {
+  function errorWithHelp(message, code) {
+    console.error(message);
+    console.log(program.helpInformation());
+    process.exit(code || 1);
+  }
+
   const stdinString = await getStdin();
   let stdinJsonParsed = null;
+
+  if (program.args.length < 1) {
+    errorWithHelp('Argument "output-format" is required.', 1);
+  }
 
   const requestedInputFormat = (program.inputFormat + '').toLowerCase();
   const outputFormat = program.args[0].toLowerCase();
 
   if (!supportedFormatIndex.has(requestedInputFormat) && requestedInputFormat !== autoFormat) {
-  	console.error('Invalid input format "' + requestedInputFormat + '".');
+    errorWithHelp('Invalid input format "' + requestedInputFormat + '".', 2);
   }
   if (!supportedFormatIndex.has(outputFormat)) {
-  	console.error('Invalid output format "' + outputFormat + '".');
+    errorWithHelp('Invalid output format "' + outputFormat + '".', 3);
   }
 
   let inputFormat = requestedInputFormat;
@@ -64,11 +74,6 @@ program
       stdinJsonParsed = stdinJsonParsed || JSON.parse(stdinString);
       primative = arcGis.parse(stdinJsonParsed);
       break;
-
-    default:
-      console.error('Unknown input format "' + inputFormat + '"');
-      process.exit(1);
-      break;
   }
 
   let output = null;
@@ -83,11 +88,6 @@ program
 
     case 'arcgis':
       output = JSON.stringify(arcGis.convert(primative));
-      break;
-
-    default:
-      console.error('Unknown output format "' + outputFormat + '"');
-      process.exit(2);
       break;
   }
 

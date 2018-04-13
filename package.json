@@ -1,6 +1,6 @@
 {
   "name": "geoconv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line geo format converter.",
   "main": "index.js",
   "author": "Jeff Marion",
